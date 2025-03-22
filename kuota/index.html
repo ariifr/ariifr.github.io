@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="id"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Kuota XL AXIS | Shokymura</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');		
+        body {
+            background: rgb(0,64,122);
+			background: linear-gradient(90deg, rgba(0,64,122,1) 0%, rgba(192,97,203,1) 100%);  
+			font-family: Winky Sans;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 10px;
+			background: #ffffff44;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ffffff;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 16px;
+        }
+        textarea {
+            height: 35px; /* Perbesar input box */
+        }
+		.center-img {
+			max-width: 30%;
+			height: auto;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		h2.judul{
+			font: small-caps bold 26px Helvetica, Arial;
+			color: #ffffff;
+			text-align: center;
+			margin-top: 50px;
+		}
+		.form-label {
+			text-align: right;
+			color: #ffffff;
+		}
+		input[type="text"] {
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #0d6efd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+	<img class="center-img" src="img/sm.png">
+        <h2 class="judul">Cek Kuota XL AXIS</h2>
+        <div class="card p-4 mt-3">
+            <!-- <h4 class="text-center mb-3">Cek Paket</h4> -->
+            <form id="cekKuotaForm">
+                <div class="mb-3">
+                    <label for="nomor" class="form-label">Masukkan Nomor Axis atau XL Anda</label>
+                    <input type="text" id="nomor" name="nomor"  placeholder="Contoh: 6287847076805" required=""></input>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Cek Paket</button>
+            </form>
+
+            <div class="alert mt-3" id="responseMessage" style="display: none;">
+                <pre id="resultText"></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © Shokymura 2025
+    </div>
+
+    <script>
+        document.getElementById("cekKuotaForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            
+            let inputNomor = document.getElementById("nomor").value.trim();
+            let responseMessage = document.getElementById("responseMessage");
+            let resultText = document.getElementById("resultText");
+
+            // Pisahkan input berdasarkan koma atau spasi, lalu hilangkan duplikat
+            let nomorList = [...new Set(inputNomor.split(/[\s,]+/).map(n => n.trim()).filter(n => n))];
+
+            if (nomorList.length === 0) {
+                responseMessage.style.display = "block";
+                responseMessage.className = "alert alert-danger";
+                resultText.textContent = "❌ Masukkan setidaknya satu nomor HP.";
+                return;
+            }
+
+            responseMessage.style.display = "block";
+            responseMessage.className = "alert alert-info";
+            resultText.textContent = "🔄 Memproses permintaan...";
+
+            let hasilAkhir = [];
+
+            for (let nomor of nomorList) {
+                let nomorHP = nomor.replace(/\D/g, ""); // Hanya angka
+
+                // Ubah 62 ke 08 jika perlu
+                if (/^62\d{9,12}$/.test(nomorHP)) {
+                    nomorHP = "0" + nomorHP.substring(2);
+                }
+
+                // Validasi nomor
+                if (!/^08\d{8,11}$/.test(nomorHP)) {
+                    hasilAkhir.push(`❌ ${nomor}: Format tidak valid.\n---`);
+                    continue;
+                }
+
+                let apiUrl = `https://apigw.kmsp-store.com/sidompul/v3/cek_kuota?msisdn=${nomorHP}&isJSON=true`;
+
+                try {
+                    let response = await fetch(apiUrl, {
+                        headers: {
+                            "Authorization": "Basic c2lkb21wdWxhcGk6YXBpZ3drbXNw",
+                            "X-API-Key": "4352ff7d-f4e6-48c6-89dd-21c811621b1c",
+                            "X-App-Version": "3.0.0"
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("Gagal menghubungi server.");
+                    }
+
+                    let data = await response.json();
+
+                    if (data.statusCode !== 200) {
+                        hasilAkhir.push(`❌ ${nomor}: ${data.message || "Gagal memproses."}\n---`);
+                    } else {
+                        let hasilKuota = data.data.hasil
+                            .replace(/<br>/g, "\n")
+                            .replace(/📲.*\n?/u, "")
+                            .replace(/📃.*\n?/u, "")
+                            .trim();
+
+                        hasilAkhir.push(`✅ ${nomor}:\n${hasilKuota}\n---`);
+                    }
+                } catch (error) {
+                    hasilAkhir.push(`❌ ${nomor}: ${error.message}\n---`);
+                }
+            }
+
+            responseMessage.className = hasilAkhir.some(h => h.startsWith("❌")) ? "alert alert-danger" : "alert alert-success";
+            resultText.textContent = hasilAkhir.join("\n");
+        });
+    </script>
+
+</body></html>
