@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metode Pembayaran | Shokymura</title>
+	<link rel="stylesheet" href="../kuota/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <img class="logo" src="img/sm.png"><h1>Metode Pembayaran</h1>
+</header>
+
+<div class="container">
+<div class="container-qr">
+<h2> QRIS | Kedai Shokymura</h2>
+	<img class="qris" src="img/qris.png">
+</div>
+<div class="container-bank">
+    <div class="payment-method">
+        <div class="payment-method-name tooltip">
+            <img src="img/dana.svg" alt="Dana" onclick="copas('085761167311')" onmouseout="outFunc()"></div>
+    </div>
+    <div class="payment-method">
+        <div class="payment-method-name">
+            <img src="img/gopay.svg" alt="Gopay"></div>
+    </div>
+    <div class="payment-method">
+        <div class="payment-method-name">
+            <img src="img/shopeepay.svg" alt="ShopeePay"></div>
+    </div>
+    <div class="payment-method">
+        <div class="payment-method-name">
+            <img src="img/jago.svg" alt="Bank Jago"></div>
+    </div>
+	 <div class="payment-method">
+        <div class="payment-method-name">
+            <img src="img/seabank.svg" alt="SeaBank"></div>
+    </div>
+</div></div>
+<div class="container">
+	
+</div>
+<footer>
+    <p>&copy; 2025 Shokymura. All rights reserved.</p>
+</footer>
+<script>
+function copas(norek) {
+  navigator.clipboard.writeText(copyText.value);
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied: " + copyText.value;
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+</script>
+</body>
+</html>
