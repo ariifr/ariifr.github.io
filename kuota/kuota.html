@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://registrasi.xl.co.id/favicon.ico" type="image/x-icon" sizes="16x16" />
+    <title>Cek Kuota XL & Axis | Shokymura</title>
+    <meta name="description" content="Cek Kuota AXIS/XL | Shokymura" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#4a6cf7',    /* primary dari index.html */
+                            magenta: '#3b5de7', /* primary-dark dari index.html */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* SVG icons inherit text color & scale with font size */
+        /* display:inline-block overrides Tailwind preflight's svg{display:block} */
+        svg.lucide {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.125em;
+        }
+
+        /* --- STYLE BARU UNTUK FOOTER --- */
+        footer {
+            /* background-color: #597FEB; /* Warna senada dengan header */
+            background-color: #1f2937;
+            border-top: 1px solid #e2e8f0;
+            color: #000000;
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            margin-top: 40px;
+        }
+
+        /* Memastikan judul di footer berwarna putih */
+        footer h2 {
+            color: #4a6cf7;
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+
+        /* Wadah untuk menyejajarkan tombol */
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            /* Jarak antar tombol */
+            margin-bottom: 30px;
+        }
+
+        /* Desain tombol link */
+        .btn-order {
+            background-color: #ffffff;
+            color: #4a6cf7;
+            padding: 12px 30px;
+            text-decoration: none;
+            /* Menghilangkan garis bawah pada link */
+            font-weight: bold;
+            border-radius: 25px;
+            /* Membuat ujung tombol membulat */
+            transition: all 0.3s ease;
+            /* Efek animasi halus */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Efek saat tombol disentuh kursor (hover) */
+        .btn-order:hover {
+            background-color: #eef1ff;
+            /* Berubah menjadi biru sangat muda */
+            transform: translateY(-3px);
+            /* Tombol sedikit naik ke atas */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Teks hak cipta */
+        .footer-copyright {
+            font-size: 0.9em;
+            opacity: 0.8;
+            /* Sedikit transparan agar tidak terlalu mencolok */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900">
+
+    <div id="main-wrapper" class="min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8">
+
+        <div class="max-w-2xl w-full space-y-6">
+            <div class="space-y-6 w-full">
+                <div id="logo-container">
+                    <center><img src="xlsmart.png" alt="Logo" class="h-20 w-auto"></center>
+                </div>
+
+                <div id="form-container"
+                    class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-t-4 border-brand-magenta">
+                    <h2 class="text-xl font-semibold text-center text-gray-900 dark:text-white mb-4"><i
+                            data-lucide="smartphone"></i> Masukkan Nomor
+                        XL & Axis</h2>
+                    <form id="cekKuotaForm">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="nomor" class="sr-only">Nomor Telepon</label>
+                                <input type="text" id="nomor" name="nomor"
+                                    class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-200 focus:ring-brand-magenta focus:border-brand-magenta"
+                                    placeholder="Contoh: 081912345678" required>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-gradient-to-r from-brand-blue to-brand-magenta hover:opacity-90 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-brand-magenta/50">
+                                <i data-lucide="search"></i> Cek Kuota
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="loadingIndicator" class="hidden text-center text-gray-500 dark:text-gray-400">
+                    <p><i data-lucide="loader-circle" class="inline animate-spin"></i> Sedang memeriksa data...</p>
+                </div>
+                <div id="error-message"
+                    class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert">
+                    <strong class="font-bold"><i data-lucide="triangle-alert"></i> Oops!</strong>
+                    <span class="block sm:inline" id="error-text">Terjadi kesalahan.</span>
+                </div>
+
+                <div id="results-container" class="space-y-6 hidden">
+                    <header class="text-center">
+                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white"><i
+                                data-lucide="chart-column"></i> Rincian Kuota</h1>
+                        <p id="msisdn-display" class="text-brand-magenta font-medium"></p>
+                    </header>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                        <h2
+                            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 border-b dark:border-gray-700 pb-2">
+                            <i data-lucide="credit-card"></i> Informasi Nomor
+                        </h2>
+                        <div id="card-info-container" class="space-y-3 text-sm sm:text-base">
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                        <h2
+                            class="text-xl font-semibold text-gray-900 dark:text-white mb-4 border-b dark:border-gray-700 pb-2">
+                            <i data-lucide="package"></i> Detail Paket Kuota
+                        </h2>
+                        <div id="quota-details-container" class="space-y-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-buttons">
+            <a href="https://arifr.id/akrab"
+                class="bg-gradient-to-r from-brand-blue to-brand-magenta hover:opacity-90 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-brand-magenta/50">
+                Cek Area Akrab</a>
+        </div>
+        <div class="footer-copyright text-gray-900 dark:text-white">
+            © 2026 Shokymura
+        </div>
+    </footer>
+    <script>
+        lucide.createIcons();
+
+        document.getElementById("cekKuotaForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const nomorInput = document.getElementById("nomor").value.trim();
+            const loadingIndicator = document.getElementById("loadingIndicator");
+            const resultsContainer = document.getElementById("results-container");
+            const errorContainer = document.getElementById("error-message");
+            const errorText = document.getElementById("error-text");
+            const mainWrapper = document.getElementById("main-wrapper");
+
+            loadingIndicator.classList.remove("hidden");
+            resultsContainer.classList.add("hidden");
+            errorContainer.classList.add("hidden");
+
+            const apiUrl = `https://apigw.kmsp-store.com/sidompul/v4/cek_kuota?msisdn=${nomorInput}&isJSON=true`;
+            const headers = {
+                'Authorization': 'Basic c2lkb21wdWxhcGk6YXBpZ3drbXNw',
+                'X-API-Key': '60ef29aa-a648-4668-90ae-20951ef90c55',
+                'X-App-Version': '4.0.0'
+            };
+
+            try {
+                const response = await fetch(apiUrl, { headers: headers });
+                const data = await response.json();
+
+                if (response.ok && data.status === true) {
+                    displayData(data.data);
+                    mainWrapper.classList.remove('items-center');
+                    mainWrapper.classList.add('items-start');
+                    resultsContainer.classList.remove("hidden");
+                    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    lucide.createIcons();
+                } else {
+                    mainWrapper.classList.add('items-center');
+                    mainWrapper.classList.remove('items-start');
+                    errorText.textContent = data.message || `Gagal memproses nomor ${nomorInput}.`;
+                    errorContainer.classList.remove("hidden");
+                }
+            } catch (error) {
+                mainWrapper.classList.add('items-center');
+                mainWrapper.classList.remove('items-start');
+                console.error("Fetch error:", error);
+                errorText.textContent = "Gagal terhubung ke server. Periksa koneksi internet Anda.";
+                errorContainer.classList.remove("hidden");
+            } finally {
+                loadingIndicator.classList.add("hidden");
+            }
+        });
+
+        function displayData(data) {
+            document.getElementById('msisdn-display').textContent = `MSISDN: ${data.msisdn}`;
+
+            const cardInfoContainer = document.getElementById('card-info-container');
+            const sp = data.data_sp;
+            cardInfoContainer.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2"><i data-lucide="radio-tower"></i> Operator</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">${sp.prefix.value}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2"><i data-lucide="shield-check"></i> Status Dukcapil</span>
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">${sp.dukcapil.value}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2"><i data-lucide="signal"></i> Status Jaringan</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">${sp.status_4g.value}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2"><i data-lucide="id-card"></i> Umur Kartu</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">${sp.active_card.value}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2"><i data-lucide="calendar-days"></i> Masa Aktif s/d</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">${formatSimpleDate(sp.active_period.value)}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2"><i data-lucide="hourglass"></i> Masa Tenggang s/d</span>
+                    <span class="font-semibold text-red-600 dark:text-red-400">${formatSimpleDate(sp.grace_period.value)}</span>
+                </div>
+            `;
+
+            const quotaContainer = document.getElementById('quota-details-container');
+            quotaContainer.innerHTML = '';
+
+            if (sp.quotas && sp.quotas.value && sp.quotas.value.length > 0) {
+                sp.quotas.value.forEach(paketData => {
+                    if (!paketData || !paketData[0]) return;
+                    const paket = paketData[0];
+                    let benefitsHtml = '<p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Tidak ada rincian benefit pada paket ini.</p>';
+
+                    if (paket.benefits && paket.benefits.length > 0) {
+                        benefitsHtml = '<ul class="space-y-4 text-sm">';
+                        paket.benefits.forEach(benefit => {
+                            if (benefit.type === 'DATA') {
+                                const { percentage } = parseAndCalculateQuota(benefit.remaining, benefit.quota);
+                                const progressBarColor = percentage > 50 ? 'bg-green-500' : percentage > 10 ? 'bg-yellow-500' : 'bg-red-500';
+                                benefitsHtml += `
+                                    <li>
+                                        <div class="flex justify-between font-medium text-gray-700 dark:text-gray-300">
+                                            <span class="flex items-center gap-2"><i data-lucide="globe"></i> ${benefit.bname}</span>
+                                            <span>${benefit.remaining} / ${benefit.quota}</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-1">
+                                            <div class="${progressBarColor} h-2 rounded-full" style="width: ${percentage}%;"></div>
+                                        </div>
+                                    </li>
+                                `;
+                            } else {
+                                benefitsHtml += `
+                                    <li>
+                                        <div class="flex justify-between font-medium text-brand-blue dark:text-blue-400">
+                                            <span class="flex items-center gap-2"><i data-lucide="phone"></i> ${benefit.bname}</span>
+                                            <span>${benefit.remaining}</span>
+                                        </div>
+                                    </li>
+                                `;
+                            }
+                        });
+                        benefitsHtml += '</ul>';
+                    }
+
+                    quotaContainer.innerHTML += `
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-brand-magenta transition-colors duration-300">
+                            <div class="mb-3">
+                                <h3 class="font-bold text-lg text-brand-magenta">${paket.packages.name}</h3>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Kadaluarsa: ${formatFullDate(paket.packages.expDate)}</p>
+                            </div>
+                            ${benefitsHtml}
+                        </div>
+                    `;
+                });
+            } else {
+                quotaContainer.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">Tidak ada data paket kuota yang ditemukan.</p>';
+            }
+            lucide.createIcons();
+        }
+
+        function formatSimpleDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateStr).toLocaleDateString('id-ID', options);
+        }
+
+        function formatFullDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateStr).toLocaleDateString('id-ID', options).replace(/\./g, ':');
+        }
+
+        function parseAndCalculateQuota(remainingStr, totalStr) {
+            const parseValue = (str) => {
+                if (!str) return 0;
+                let value = parseFloat(str.replace(/,/g, '.'));
+                if (str.toLowerCase().includes('gb')) value *= 1024;
+                return isNaN(value) ? 0 : value;
+            };
+
+            let remaining = parseValue(remainingStr);
+            let total = parseValue(totalStr);
+            if (total === 0) return { remaining, total, percentage: 0 };
+
+            let percentage = (remaining / total) * 100;
+            return { remaining, total, percentage: Math.min(percentage, 100) };
+        }
+    </script>
+</body>
+
+</html>
