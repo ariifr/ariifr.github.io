@@ -1,12 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/x-icon" href="avatar.png"> 
+    <link rel="icon" type="image/x-icon" href="avatar.png">
     <title>Arif Rahman - Homepage</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
+        :root {
+            /* Dark Theme (Default) */
+            --bg-body: #111215;
+            --bg-card: #18191e;
+            --bg-card-hover: #1f2027;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(229, 115, 115, 0.45);
+            --text-title: #ffffff;
+            --text-body: #a1a1aa;
+            --text-subtle: #71717a;
+            --accent: #e57373;
+            --accent-bg: rgba(229, 115, 115, 0.1);
+            --divider: rgba(255, 255, 255, 0.07);
+            --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 16px 30px -4px rgba(229, 115, 115, 0.15);
+            --logo-color: #ffffff;
+            --logo-hover: #e57373;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme */
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(220, 70, 70, 0.45);
+            --text-title: #0f172a;
+            --text-body: #475569;
+            --text-subtle: #94a3b8;
+            --accent: #dc4646;
+            --accent-bg: rgba(220, 70, 70, 0.08);
+            --divider: rgba(0, 0, 0, 0.08);
+            --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 16px 30px -4px rgba(220, 70, 70, 0.12);
+            --logo-color: #1e293b;
+            --logo-hover: #dc4646;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,459 +59,462 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background-color: var(--bg-body);
+            color: var(--text-body);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: #1e1e1e;
-            color: #e0e0e0;
-            padding: 1rem;
+            padding: 3.5rem 1.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
             width: 100%;
-            max-width: 500px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #f0f0f0;
-            letter-spacing: 0.05rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .input-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
-        .input-wrapper input {
-            width: 100%;
-            padding: 1rem 3rem 1rem 1rem;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 1rem;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.1rem;
-            transition: all 0.3s ease;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .input-wrapper input:focus {
-            outline: none;
-            border-color: #666;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .input-wrapper input::placeholder {
-            color: #555;
-            letter-spacing: normal;
-            font-family: system-ui;
-        }
-
-        .icon-link {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #888;
-            transition: color 0.2s;
-            font-size: 1.2rem;
-        }
-
-        .icon-link:hover {
-            color: #fff;
-        }
-
-        .display-area {
-            text-align: center;
-        }
-
-        .display-area.hidden {
-            display: none;
-        }
-
-        .totp-box {
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 1.2rem;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            background: #111;
-            transition: all 0.3s ease;
-        }
-
-        .totp-box:hover {
-            border-color: #666;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .totp-box.copied {
-            border-color: #4f8;
-            box-shadow: 0 0 15px rgba(68, 255, 136, 0.2);
-        }
-
-        .code {
-            font-size: 2.2rem;
-            letter-spacing: 0.5rem;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            color: #e0e0e0;
-        }
-
-        .tooltip {
-            font-size: 0.85rem;
-            color: #888;
-            margin-bottom: 1.5rem;
-        }
-
-        .timer-bar {
-            width: 60%;
-            margin: 0 auto;
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .timer-bar-fill {
-            height: 100%;
-            background: #e57373;
-            /* Reddish pink from image */
-            transition: width 1s linear;
-        }
-
-        .next-code-info {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 1.5rem;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn:hover {
-            color: #fff;
-        }
-
-        .btn.small {
-            font-size: 0.85rem;
-        }
-
-        .error-message {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid rgba(255, 68, 68, 0.3);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            color: #f66;
-            font-size: 0.875rem;
-            margin-top: 1rem;
-            text-align: center;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .qr-container {
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 500px) {
-            .code {
-                font-size: 1.8rem;
-                letter-spacing: 0.3rem;
-            }
-        }
-
-        body {
+            max-width: 900px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: #1e1e1e;
-            color: #e0e0e0;
-            font-family: system-ui, -apple-system, sans-serif;
-            padding: 3rem 1.5rem;
-            box-sizing: border-box;
         }
 
+        /* Header Section */
         .header-content {
             text-align: center;
-            margin-bottom: 3rem;
-            max-width: 600px;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Logo MAN */
+        .logo-wrapper {
+            margin-bottom: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-wrapper:hover {
+            transform: scale(1.06);
+        }
+
+        .site-logo {
+            width: 64px;
+            height: auto;
+            display: block;
+            overflow: visible;
+            color: var(--logo-color);
+            transition: color 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo-wrapper:hover .site-logo {
+            color: var(--logo-hover);
+            filter: drop-shadow(0 0 12px var(--accent-bg));
         }
 
         .greeting {
-            font-size: 1.2rem;
-            color: #e57373;
+            font-size: 0.85rem;
+            color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 0.15rem;
+            letter-spacing: 0.2rem;
             margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .name {
-            font-size: 4rem;
-            color: #fff;
+            font-size: 3rem;
+            color: var(--text-title);
             margin-bottom: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02rem;
+            font-weight: 800;
+            letter-spacing: -0.03rem;
+            line-height: 1.1;
+            transition: color 0.3s ease;
         }
 
+        /* Social & Action Icons */
         .social-icons {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            box-shadow: var(--shadow-card);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         .social-icon {
-            color: #aaa;
+            color: var(--text-body);
             text-decoration: none;
-            transition: color 0.2s, transform 0.2s;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
         }
 
         .social-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
         }
 
         .social-icon:hover {
-            color: #e57373;
-            transform: translateY(-3px);
+            color: var(--accent);
+            background: var(--accent-bg);
+            transform: translateY(-2px);
         }
 
+        /* Divider inside icon pill */
+        .pill-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--border-color);
+            margin: 0 0.1rem;
+        }
+
+        /* Theme Switcher Button */
+        .theme-btn {
+            position: relative;
+        }
+
+        .theme-btn svg {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+        }
+
+        [data-theme="dark"] .theme-btn .moon-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-btn .sun-icon {
+            display: block;
+        }
+
+        [data-theme="light"] .theme-btn .sun-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .theme-btn .moon-icon {
+            display: block;
+        }
+
+        /* Section Divider */
         .divider {
             width: 100%;
-            max-width: 900px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #333 15%, #333 85%, transparent);
-            margin: 2rem 0;
+            background: linear-gradient(90deg, transparent, var(--divider) 15%, var(--divider) 85%, transparent);
+            margin: 2.25rem 0;
             border: none;
         }
 
+        /* Section Header */
         .section-title {
-            font-size: 1.4rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 0.05rem;
+            font-size: 1.2rem;
+            color: var(--text-title);
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01rem;
             width: 100%;
-            max-width: 900px;
             text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
         }
 
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--divider);
+        }
+
+        /* Projects Grid */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 1.25rem;
             width: 100%;
-            max-width: 900px;
         }
 
         @media (min-width: 900px) {
             .projects-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
+        /* Project Cards */
         .project-card {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 1.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
             text-decoration: none;
-            color: #e0e0e0;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            color: var(--text-body);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100%;
-            box-sizing: border-box;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .project-card:hover {
-            border-color: #e57373;
+            border-color: var(--border-hover);
             transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(229, 115, 115, 0.1);
+            box-shadow: var(--shadow-hover);
+            background-color: var(--bg-card-hover);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
         }
 
         .project-title {
-            font-size: 1.25rem;
-            color: #fff;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--text-title);
+            margin-bottom: 0.6rem;
+            font-weight: 700;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--accent);
         }
 
         .project-title .arrow {
-            color: #e57373;
+            color: var(--text-subtle);
             font-size: 1.1rem;
-            transition: transform 0.2s;
+            transition: transform 0.25s ease, color 0.25s ease;
         }
 
         .project-card:hover .project-title .arrow {
+            color: var(--accent);
             transform: translate(3px, -3px);
         }
 
         .project-desc {
             font-size: 0.9rem;
-            color: #aaa;
-            line-height: 1.5;
+            color: var(--text-body);
+            line-height: 1.6;
             margin-bottom: 1.25rem;
         }
 
         .project-tag {
             font-size: 0.75rem;
-            color: #e57373;
-            text-transform: uppercase;
-            letter-spacing: 0.05rem;
+            color: var(--accent);
+            background: var(--accent-bg);
+            padding: 0.3rem 0.65rem;
+            border-radius: 6px;
+            display: inline-block;
             font-weight: 600;
+            align-self: flex-start;
+            letter-spacing: 0.02rem;
+        }
+
+        @media (max-width: 600px) {
+            .name {
+                font-size: 2.25rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 2.5rem 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="header-content">
-        <div class="greeting">Halaman Rumah</div>
-        <div class="name">ARIF RAHMAN</div>
-        <div class="social-icons">
-            <!-- Facebook -->
-            <a href="https://facebook.com/reevRM" target="_blank" class="social-icon" aria-label="Facebook">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" />
+    <div class="container">
+        <!-- Header -->
+        <div class="header-content">
+            <!-- Logo MAN (Editable Color) -->
+            <div class="logo-wrapper" title="Logo MAN">
+                <svg class="site-logo" viewBox="5 54 205 182" xmlns="http://www.w3.org/2000/svg" aria-label="Logo MAN">
+                    <path fill="currentColor"
+                        d="m 47.97217,59.339465 0.03956,0.125045 h -0.107609 c 0,0 -33.465095,103.17466 -35.331917,107.39673 -1.866819,4.2221 1.305988,11.2523 4.786035,13.78061 3.480049,2.52832 12.831167,9.32206 12.831167,9.32206 l 30.149042,-91.642289 4.426335,13.953999 -27.298095,82.97591 20.35257,14.78679 32.489175,-98.75625 4.72534,14.89524 -13.07019,39.72861 -0.15864,-0.1174 -16.21716,49.89383 20.35257,14.78721 8.4265,-25.61339 13.393657,10.42258 12.87218,-8.40654 c 7.82409,23.22757 0.0449,0.76892 7.7745,23.79428 20.01158,-14.96224 0.16517,0.0221 20.16968,-14.92161 l -28.37035,-89.43401 4.9444,-15.0288 31.31867,98.72818 c 0,0 36.52051,-26.5333 40.31145,-29.28766 3.79094,-2.75436 6.56501,-9.70983 5.23769,-13.89405 C 200.69139,162.64431 167.68918,59.46451 167.68918,59.46451 H 142.8299 l 32.39049,102.10563 c 0.65189,2.05499 0.71396,4.26383 -0.84951,5.41916 l -5.199,3.84185 -31.39014,-98.954005 h -25.07835 c -0.0255,0.0764 -8.2e-4,0.0011 -0.0272,0.07953 l 0.0957,0.302404 -4.94396,15.028373 -25.800337,0.07502 -8.74696,-27.462438 h 0.0646 v -0.159071 h -0.11478 l -0.0247,-0.07741 -0.14929,-0.0021 0.0651,-0.196922 c -8.38408,0.05555 -16.76634,-0.0174 -25.149377,-0.12503 z m 59.4402,105.860835 4.80761,15.5201 -4.48919,5.06343 -5.48184,-4.88781 z" />
                 </svg>
+            </div>
+
+            <div class="greeting">Halaman Rumah</div>
+            <h1 class="name">ARIF RAHMAN</h1>
+
+            <!-- Social Links + Dark Mode Toggle -->
+            <div class="social-icons">
+                <!-- Facebook -->
+                <a href="https://facebook.com/reevRM" target="_blank" rel="noopener noreferrer" class="social-icon"
+                    aria-label="Facebook" title="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" />
+                    </svg>
+                </a>
+                <!-- Instagram -->
+                <a href="https://instagram.com/reevRM" target="_blank" rel="noopener noreferrer" class="social-icon"
+                    aria-label="Instagram" title="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <!-- Twitter / X -->
+                <a href="https://twitter.com/reevRM" target="_blank" rel="noopener noreferrer" class="social-icon"
+                    aria-label="Twitter" title="Twitter">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/reevrm/" target="_blank" rel="noopener noreferrer"
+                    class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+                <!-- Email -->
+                <a href="mailto:mail@arifr.id" class="social-icon" aria-label="Email" title="Email">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                </a>
+
+                <!-- Visual Divider -->
+                <div class="pill-divider"></div>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="social-icon theme-btn" aria-label="Ganti Tema (Dark/Light)"
+                    title="Ganti Tema">
+                    <!-- Sun Icon (shown in dark mode) -->
+                    <svg class="sun-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z" />
+                    </svg>
+                    <!-- Moon Icon (shown in light mode) -->
+                    <svg class="moon-icon" viewBox="0 0 24 24">
+                        <path d="M12.3 2a10 10 0 0 0-.19 2 10 10 0 0 0 10 10c.7 0 1.37-.07 2-.19A10 10 0 1 1 12.3 2z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Section Divider -->
+        <hr class="divider">
+
+        <!-- Section Title -->
+        <h2 class="section-title">Tautan</h2>
+
+        <!-- Projects Grid Section -->
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <a href="https://laporip.my.id" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div>
+                    <div class="project-title">
+                        <span>LapoRIP</span>
+                        <span class="arrow">↗</span>
+                    </div>
+                    <p class="project-desc">Personal Database Online Scammer. Terdiri dari akun, rekening, ewallet dan
+                        juga QRIS scammer</p>
+                </div>
+                <div class="project-tag">Alt link: fraud.arifr.id</div>
             </a>
-            <!-- Instagram -->
-            <a href="https://instagram.com/reevRM" target="_blank" class="social-icon" aria-label="Instagram">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                </svg>
+
+            <!-- Project 2 -->
+            <a href="https://tools.arifr.id/tv" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div>
+                    <div class="project-title">
+                        <span>TV Stream</span>
+                        <span class="arrow">↗</span>
+                    </div>
+                    <p class="project-desc">Online Streaming melalui IPTV atau M3U playlist. Langsung dari browser tanpa
+                        perlu install aplikasi. Support hingga 1080p</p>
+                </div>
+                <div class="project-tag">Link: tools.arifr.id/tv</div>
             </a>
-            <!-- Twitter / X -->
-            <a href="https://twitter.com/reevRM" target="_blank" class="social-icon" aria-label="Twitter">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
+
+            <!-- Project 3 -->
+            <a href="https://akrab.my.id/kuota" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div>
+                    <div class="project-title">
+                        <span>Cek Kuota AXIS & XL</span>
+                        <span class="arrow">↗</span>
+                    </div>
+                    <p class="project-desc">Link untuk pengecekan masa aktif dan kuota / Paket pada nomor Axis dan XL
+                    </p>
+                </div>
+                <div class="project-tag">Alt link: cek.arifr.id/kuota</div>
             </a>
-            <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/in/reevrm/" target="_blank" class="social-icon" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                </svg>
-            </a>
-            <!-- Email -->
-            <a href="mailto:mail@arifr.id" class="social-icon" aria-label="Email">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                </svg>
+
+            <!-- Project 4 -->
+            <a href="https://tools.arifr.id/2fa" target="_blank" rel="noopener noreferrer" class="project-card">
+                <div>
+                    <div class="project-title">
+                        <span>2FA Code Generator</span>
+                        <span class="arrow">↗</span>
+                    </div>
+                    <p class="project-desc">Tools sederhana untuk generate Two-Factor Authentication (2FA) yang
+                        menggunakan Time-Based One Time Password (TOTP)</p>
+                </div>
+                <div class="project-tag">Link: tools.arifr.id/2fa</div>
             </a>
         </div>
     </div>
 
-    <!-- Divider -->
-    <hr class="divider">
+    <!-- Theme Toggle Script -->
+    <script>
+        (function () {
+            const toggleBtn = document.getElementById('theme-toggle');
+            const root = document.documentElement;
 
-    <!-- Section Title -->
-    <h2 class="section-title">Tautan</h2>
+            // Check saved theme or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    <!-- Projects Grid Section -->
-    <div class="projects-grid">
-        <!-- Project 1 -->
-        <a href="https://laporip.my.id" target="_blank" class="project-card">
-            <div>
-                <div class="project-title">
-                    <span>LapoRIP</span>
-                    <span class="arrow">↗</span>
-                </div>
-                <p class="project-desc">Personal Database Online Scammer. Terdiri dari akun, rekening, ewallet dan juga
-                    qris scammer</p>
-            </div>
-            <div class="project-tag">Alt link: fraud.arifr.id</div>
-        </a>
-        <a href="https://tools.arifr.id/tv" target="_blank" class="project-card">
-            <div>
-                <div class="project-title">
-                    <span>TV Stream</span>
-                    <span class="arrow">↗</span>
-                </div>
-                <p class="project-desc">Online Streaming melalui IPTV atau M3U playlist. langsung dari browser tanpa
-                    perlu install aplikasi. Support hingga 1080p</p>
-            </div>
-            <div class="project-tag">Link: tools.arifr.id/tv</div>
-        </a>
+            const currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            root.setAttribute('data-theme', currentTheme);
 
-        <!-- Project 2 -->
-        <a href="https://akrab.my.id/kuota" target="_blank" class="project-card">
-            <div>
-                <div class="project-title">
-                    <span>Cek Kuota AXIS & XL</span>
-                    <span class="arrow">↗</span>
-                </div>
-                <p class="project-desc">Link untuk pengecekan masa aktif dan kuota pada nomor Axis dan XL </p>
-            </div>
-            <div class="project-tag">Alt link: cek.arifr.id/kuota</div>
-        </a>
+            toggleBtn.addEventListener('click', function () {
+                const nowTheme = root.getAttribute('data-theme');
+                const nextTheme = nowTheme === 'dark' ? 'light' : 'dark';
 
-        <!-- Project 3 -->
-        <a href="https://tools.arifr.id/2fa" class="project-card">
-            <div>
-                <div class="project-title">
-                    <span>2FA Code Generator</span>
-                    <span class="arrow">↗</span>
-                </div>
-                <p class="project-desc">Tools sederhana untuk generate Two-Factor Authentication (2FA) yang menggunakan
-                    Time-Based One Time Password (TOTP)</p>
-            </div>
-            <div class="project-tag">Link: tools.arifr.id/2fa</div>
-        </a>
-    </div>
+                root.setAttribute('data-theme', nextTheme);
+                localStorage.setItem('theme', nextTheme);
+            });
+        })();
+    </script>
 </body>
 
 </html>
